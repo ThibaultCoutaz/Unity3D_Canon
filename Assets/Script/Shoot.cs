@@ -15,7 +15,6 @@ public class Shoot : MonoBehaviour {
         {
             if (time > SpeedShot)
             {
-                print(Time.deltaTime + "\n");
                 GameObject shot = Instantiate(bullet, transform.position, transform.rotation) as GameObject;
                 Rigidbody rb = shot.GetComponent<Rigidbody>();
                 rb.velocity = transform.TransformVector(new Vector3(0, -1, 0)) * Speed;
