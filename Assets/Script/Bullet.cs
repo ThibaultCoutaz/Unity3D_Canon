@@ -35,7 +35,7 @@ public class Bullet : MonoBehaviour {
                     if (cible[i].GetComponent<BehaviourTarget>().Life < 1)
                     {
                         print(cible[i].GetComponent<BehaviourTarget>().explosion);
-                        cible[i].GetComponent<BehaviourTarget>().explosion.Play();
+                        (Instantiate(cible[i].GetComponent<BehaviourTarget>().explosion.gameObject, cible[i].transform.position, Quaternion.identity) as GameObject).GetComponent<ParticleSystem>().Play();
                         GameObject.Find("Terrain").GetComponent<GamePlay>().DisableTarget(cible[i]);
                     }
                 }

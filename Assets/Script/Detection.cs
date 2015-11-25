@@ -6,6 +6,7 @@ public class Detection : MonoBehaviour {
 
 
     public float RayonShoot;
+    public bool detect = false;
 
     // Use this for initialization
     void Start () {
@@ -51,10 +52,19 @@ public class Detection : MonoBehaviour {
                 {
                         if (this.GetComponent<rotationGaucheDroite>().automatique==true)
                         {
-                            //print(-cible[0].transform.position);
-                            //transform.Rotate(new Vector3(0, 1, 0), Vector3.Angle(GameObject.Find("PivotCanon").transform.forward, -cible[0].transform.position + GameObject.Find("PivotCanon").transform.position));
-                            this.transform.LookAt(-cible[0].transform.position);
+                        //print(-cible[0].transform.position);
+
+                        Vector3 forward = (cible[0].transform.position - GameObject.Find("PivotCanon").transform.position).normalized;
+                        GameObject.Find("PivotCanon").transform.forward = -forward;
+                   
+                            //Vector3 temp = -cible[0].transform.position;
+                            //temp.y = transform.position.y;
+                            //this.transform.LookAt(temp);
+                            detect = true;
                         }
+                }
+                else{
+                    detect = false;
                 }
             }
     }

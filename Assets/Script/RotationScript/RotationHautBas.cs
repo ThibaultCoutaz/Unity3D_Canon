@@ -29,6 +29,6 @@ public class RotationHautBas : MonoBehaviour {
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawLine(GameObject.Find("PivotCanon").transform.position, -GameObject.Find("MachinGun").transform.forward*50);
+        Gizmos.DrawLine(GameObject.Find("PivotCanon").transform.position, GameObject.Find("PivotCanon").transform.position - GameObject.Find("PivotCanon").transform.forward*20);
     }
 }

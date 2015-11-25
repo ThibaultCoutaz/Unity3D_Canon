@@ -54,6 +54,7 @@ public class GamePlay : MonoBehaviour
             TargetInActive[0].transform.position = Spawn.transform.position;
             rb = TargetInActive[0].GetComponent<Rigidbody>();
             rb.velocity = transform.TransformVector(new Vector3(0, 0, -1)) * 0.5f;
+            TargetInActive[0].GetComponent<BehaviourTarget>().Life = 2;
             TargetInActive[0].SetActive(true);
             TargetActive.Add(TargetInActive[0]);
             TargetInActive.RemoveAt(0);

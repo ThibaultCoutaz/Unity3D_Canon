@@ -14,12 +14,16 @@ public class Shoot : MonoBehaviour {
     // Update is called once per frame
     void Update () {
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) && GameObject.Find("MachinGun").GetComponent<rotationGaucheDroite>().automatique == false)
         {
 
             if (Shootdone == true)
                 StartCoroutine("Shooting");
     
+        }else if (GameObject.Find("MachinGun").GetComponent<rotationGaucheDroite>().automatique ==true && GameObject.Find("MachinGun").GetComponent<Detection>().detect == true)
+        {
+            if (Shootdone == true)
+                StartCoroutine("Shooting");
         }
         
     }
