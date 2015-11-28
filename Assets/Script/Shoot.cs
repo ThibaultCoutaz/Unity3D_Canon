@@ -10,17 +10,12 @@ public class Shoot : MonoBehaviour {
     Rigidbody rb;
     public List<GameObject> BulletActive = new List<GameObject>();
     public List<GameObject> BulletInActive = new List<GameObject>();
+    public GameObject MachinGun;
 
     // Update is called once per frame
     void Update () {
 
-        if (Input.GetKey(KeyCode.Space) && GameObject.Find("MachinGun").GetComponent<rotationGaucheDroite>().automatique == false)
-        {
-
-            if (Shootdone == true)
-                StartCoroutine("Shooting");
-    
-        }else if (GameObject.Find("MachinGun").GetComponent<rotationGaucheDroite>().automatique ==true && GameObject.Find("MachinGun").GetComponent<Detection>().detect == true)
+        if ( MachinGun.GetComponent<Detection>().detect == true)
         {
             if (Shootdone == true)
                 StartCoroutine("Shooting");
@@ -33,7 +28,6 @@ public class Shoot : MonoBehaviour {
         
         if (BulletInActive.Count == 0)
         {
-            Debug.Log("Pam");
             bullet = Instantiate(bullet, transform.position, transform.rotation) as GameObject;
             rb = bullet.GetComponent<Rigidbody>();
             rb.velocity = transform.TransformVector(new Vector3(0, -1, 0)) * Speed;
@@ -44,7 +38,6 @@ public class Shoot : MonoBehaviour {
         }
         else
         {
-            Debug.Log("Pam Avec une belle ball");
             BulletInActive[0].transform.position = transform.position;
             BulletInActive[0].transform.rotation = transform.rotation;
             rb = BulletInActive[0].GetComponent<Rigidbody>();

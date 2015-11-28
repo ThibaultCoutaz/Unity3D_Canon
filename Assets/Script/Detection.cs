@@ -7,6 +7,8 @@ public class Detection : MonoBehaviour {
 
     public float RayonShoot;
     public bool detect = false;
+    public GameObject Plane;
+    public GameObject pivotcanon;
 
     // Use this for initialization
     void Start () {
@@ -42,26 +44,21 @@ public class Detection : MonoBehaviour {
     //function to check if a target is in range
     public void Detect()
     {   
-        List<GameObject> cible = GameObject.Find("Terrain").GetComponent<GamePlay>().TargetActive;
-        float Rtarget = GameObject.Find("Terrain").GetComponent<GamePlay>().target.GetComponent<SphereCollider>().radius; //to take save the raduis of the Target
+        List<GameObject> cible = Plane.GetComponent<GamePlay>().TargetActive;
+        float Rtarget = Plane.GetComponent<GamePlay>().target.GetComponent<SphereCollider>().radius; //to take save the raduis of the Target
 
         if (cible.Count != 0)
             for (int i = 0; i < cible.Count; i++)
             {
                 if (distanceVector(cible[0].transform.position, transform.position) < RayonShoot + Rtarget)
                 {
-                        if (this.GetComponent<rotationGaucheDroite>().automatique==true)
-                        {
-                        //print(-cible[0].transform.position);
+                        //if (this.GetComponent<rotationGaucheDroite>().automatique==true)
+                        //{
 
-                        Vector3 forward = (cible[0].transform.position - GameObject.Find("PivotCanon").transform.position).normalized;
-                        GameObject.Find("PivotCanon").transform.forward = -forward;
-                   
-                            //Vector3 temp = -cible[0].transform.position;
-                            //temp.y = transform.position.y;
-                            //this.transform.LookAt(temp);
+                        Vector3 forward = (cible[0].transform.position - pivotcanon.transform.position).normalized;
+                       pivotcanon.transform.forward = -forward;
                             detect = true;
-                        }
+                        //}
                 }
                 else{
                     detect = false;

@@ -22,8 +22,8 @@ public class Bullet : MonoBehaviour {
     //To know if it hit a Target or not 
     void HitTarget()
     {
-        List<GameObject> cible = GameObject.Find("Terrain").GetComponent<GamePlay>().TargetActive;
-        float Rtarget = GameObject.Find("Terrain").GetComponent<GamePlay>().target.GetComponent<SphereCollider>().radius; //to take save the raduis of the Target
+        List<GameObject> cible = GameObject.Find("Plane").GetComponent<GamePlay>().TargetActive;
+        float Rtarget = GameObject.Find("Plane").GetComponent<GamePlay>().target.GetComponent<SphereCollider>().radius; //to take save the raduis of the Target
 
         if (cible.Count != 0)
             for (int i = 0; i < cible.Count; i++)
@@ -34,9 +34,8 @@ public class Bullet : MonoBehaviour {
                     cible[i].GetComponent<BehaviourTarget>().Life--;
                     if (cible[i].GetComponent<BehaviourTarget>().Life < 1)
                     {
-                        print(cible[i].GetComponent<BehaviourTarget>().explosion);
                         (Instantiate(cible[i].GetComponent<BehaviourTarget>().explosion.gameObject, cible[i].transform.position, Quaternion.identity) as GameObject).GetComponent<ParticleSystem>().Play();
-                        GameObject.Find("Terrain").GetComponent<GamePlay>().DisableTarget(cible[i]);
+                        GameObject.Find("Plane").GetComponent<GamePlay>().DisableTarget(cible[i]);
                     }
                 }
             }

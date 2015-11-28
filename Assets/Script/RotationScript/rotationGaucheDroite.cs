@@ -4,7 +4,7 @@ using System.Collections;
 public class rotationGaucheDroite : MonoBehaviour {
 
     float turnSpeed = 50f;
-    public bool automatique = false;
+    //public bool automatique = true;
 
 
     // Use this for initialization
@@ -17,18 +17,18 @@ public class rotationGaucheDroite : MonoBehaviour {
         //transform.forward = GameObject.Find("PivotCanon").transform.forward;
 
         //Rotation Gauche
-        if (automatique == false)
-        {
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                transform.Rotate(new Vector3(0, -1, 0), turnSpeed * Time.deltaTime, Space.World);
-            }
-            //Rotation Droite
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                transform.Rotate(new Vector3(0, 1, 0), turnSpeed * Time.deltaTime, Space.World);
-            }
-        }
+        //if (automatique == false)
+        //{
+        //    if (Input.GetKey(KeyCode.LeftArrow))
+        //    {
+        //        transform.Rotate(new Vector3(0, -1, 0), turnSpeed * Time.deltaTime, Space.World);
+        //    }
+        //    //Rotation Droite
+        //    if (Input.GetKey(KeyCode.RightArrow))
+        //    {
+        //        transform.Rotate(new Vector3(0, 1, 0), turnSpeed * Time.deltaTime, Space.World);
+        //    }
+        //}
         
     }
     
