@@ -48,6 +48,7 @@
      <Compile Include="Assets\BehaviourTarget.cs" />
      <Compile Include="Assets\Script\Bullet.cs" />
      <Compile Include="Assets\Script\Detection.cs" />
+     <Compile Include="Assets\Script\DetectionLG.cs" />
      <Compile Include="Assets\Script\GamePlay.cs" />
      <Compile Include="Assets\Script\RotationScript\RotationFire.cs" />
      <Compile Include="Assets\Script\RotationScript\RotationHautBas.cs" />
