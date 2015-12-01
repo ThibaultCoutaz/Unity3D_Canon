@@ -4,38 +4,42 @@ using System.Collections.Generic;
 
 public class Bullet : MonoBehaviour {
 
-	
+    public GameObject ExitBullet;
+    public GameObject Plane;
 	// Update is called once per frame
 	void Update () {
         if(transform.position.x<16 && transform.position.z<16 && transform.position.x>-16 && transform.position.z > -16) //To check if the bullet is in of the Map
         {
             HitTarget();
+            
         }
         else
         {
-            GameObject.Find("ExitBullet").GetComponent<Shoot>().DisableBullet(this.gameObject);
+            ExitBullet.GetComponent<Shoot>().DisableBullet(this.gameObject);
         }
 	}
-
 
 
     //To know if it hit a Target or not 
     void HitTarget()
     {
-        List<GameObject> cible = GameObject.Find("Plane").GetComponent<GamePlay>().TargetActive;
-        float Rtarget = GameObject.Find("Plane").GetComponent<GamePlay>().target.GetComponent<SphereCollider>().radius; //to take save the raduis of the Target
+        List<GameObject> cible = Plane.GetComponent<GamePlay>().TargetActive;
+        float Rtarget = Plane.GetComponent<GamePlay>().target.GetComponent<SphereCollider>().radius; //to take save the raduis of the Target
 
         if (cible.Count != 0)
             for (int i = 0; i < cible.Count; i++)
             {
                 if (distanceVector(cible[i].transform.position, transform.position) <  Rtarget)
                 {
-                    GameObject.Find("ExitBullet").GetComponent<Shoot>().DisableBullet(this.gameObject);
+                    ExitBullet.GetComponent<Shoot>().DisableBullet(this.gameObject);
                     cible[i].GetComponent<BehaviourTarget>().Life--;
-                    if (cible[i].GetComponent<BehaviourTarget>().Life < 1)
+                    //print("La vie de la cible "+i+ " aprés est de "+ cible[i].GetComponent<BehaviourTarget>().Life);
+                    if (cible[i].GetComponent<BehaviourTarget>().Life == 0)
                     {
-                        (Instantiate(cible[i].GetComponent<BehaviourTarget>().explosion.gameObject, cible[i].transform.position, Quaternion.identity) as GameObject).GetComponent<ParticleSystem>().Play();
-                        GameObject.Find("Plane").GetComponent<GamePlay>().DisableTarget(cible[i]);
+                        ParticleSystem p = (Instantiate(cible[i].GetComponent<BehaviourTarget>().explosion.gameObject, cible[i].transform.position, Quaternion.identity) as GameObject).GetComponent<ParticleSystem>();
+                        p.Play();
+                        Plane.GetComponent<GamePlay>().DisableTarget(cible[i],true);
+                        Destroy(p,0.5f);
                     }
                 }
             }

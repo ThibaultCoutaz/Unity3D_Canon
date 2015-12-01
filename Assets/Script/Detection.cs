@@ -52,13 +52,10 @@ public class Detection : MonoBehaviour {
             {
                 if (distanceVector(cible[0].transform.position, transform.position) < RayonShoot + Rtarget)
                 {
-                        //if (this.GetComponent<rotationGaucheDroite>().automatique==true)
-                        //{
 
                         Vector3 forward = (cible[0].transform.position - pivotcanon.transform.position).normalized;
                        pivotcanon.transform.forward = -forward;
                             detect = true;
-                        //}
                 }
                 else{
                     detect = false;

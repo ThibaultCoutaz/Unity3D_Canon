@@ -6,8 +6,6 @@ public class RotationFire : MonoBehaviour {
 
     Vector3 rotate = new Vector3(0, 1, 0);
     public ParticleSystem FireShoot;
-
-    public Transform Bullet;
     public float Speed = 5;
 
 

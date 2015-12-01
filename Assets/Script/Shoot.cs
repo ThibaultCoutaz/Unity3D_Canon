@@ -11,6 +11,7 @@ public class Shoot : MonoBehaviour {
     public List<GameObject> BulletActive = new List<GameObject>();
     public List<GameObject> BulletInActive = new List<GameObject>();
     public GameObject MachinGun;
+    public GameObject Plane;
 
     // Update is called once per frame
     void Update () {
@@ -29,6 +30,8 @@ public class Shoot : MonoBehaviour {
         if (BulletInActive.Count == 0)
         {
             bullet = Instantiate(bullet, transform.position, transform.rotation) as GameObject;
+            bullet.GetComponent<Bullet>().ExitBullet = this.gameObject;
+            bullet.GetComponent<Bullet>().Plane = Plane;
             rb = bullet.GetComponent<Rigidbody>();
             rb.velocity = transform.TransformVector(new Vector3(0, -1, 0)) * Speed;
             BulletActive.Add(bullet);
