@@ -9,6 +9,7 @@ public class Detection : MonoBehaviour {
     public bool detect = false;
     public GameObject Plane;
     public GameObject pivotcanon;
+    int MoreNear = 0;
 
     // Use this for initialization
     void Start () {
@@ -46,16 +47,21 @@ public class Detection : MonoBehaviour {
     {   
         List<GameObject> cible = Plane.GetComponent<GamePlay>().TargetActive;
         float Rtarget = Plane.GetComponent<GamePlay>().target.GetComponent<SphereCollider>().radius; //to take save the raduis of the Target
-
+        bool test = true;
         if (cible.Count != 0)
             for (int i = 0; i < cible.Count; i++)
             {
-                if (distanceVector(cible[0].transform.position, transform.position) < RayonShoot + Rtarget)
+                if (distanceVector(cible[i].transform.position, transform.position) < RayonShoot + Rtarget)
                 {
+                    if (test == true)
+                    {
+                        MoreNear = i;
+                        test = false;
+                    }
 
-                        Vector3 forward = (cible[0].transform.position - pivotcanon.transform.position).normalized;
-                       pivotcanon.transform.forward = -forward;
-                            detect = true;
+                        Vector3 forward = (cible[MoreNear].transform.position - pivotcanon.transform.position).normalized;
+                        pivotcanon.transform.forward = -forward;
+                        detect = true;
                 }
                 else{
                     detect = false;
