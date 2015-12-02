@@ -3,7 +3,7 @@ using System.Collections;
 
 public class rotationGaucheDroite : MonoBehaviour {
 
-    float turnSpeed = 50f;
+    //float turnSpeed = 50f;
     //public bool automatique = true;
 
 

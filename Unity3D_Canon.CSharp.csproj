@@ -68,14 +68,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BehaviourTarget.cs" />
-    <Compile Include="Assets\Script\Bullet.cs" />
-    <Compile Include="Assets\Script\Detection.cs" />
+    <Compile Include="Assets\Script\BehaviourTarget.cs" />
     <Compile Include="Assets\Script\GamePlay.cs" />
+    <Compile Include="Assets\Script\Gatling\Bullet.cs" />
+    <Compile Include="Assets\Script\Gatling\Detection.cs" />
+    <Compile Include="Assets\Script\Gatling\Shoot.cs" />
+    <Compile Include="Assets\Script\LanceGrenade\BulletLG.cs" />
+    <Compile Include="Assets\Script\LanceGrenade\DetectionLG.cs" />
+    <Compile Include="Assets\Script\LanceGrenade\ShootLG.cs" />
     <Compile Include="Assets\Script\RotationScript\RotationFire.cs" />
     <Compile Include="Assets\Script\RotationScript\RotationHautBas.cs" />
     <Compile Include="Assets\Script\RotationScript\rotationGaucheDroite.cs" />
-    <Compile Include="Assets\Script\Shoot.cs" />
     <Compile Include="Assets\Script\SpecialEffectsHelper.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />

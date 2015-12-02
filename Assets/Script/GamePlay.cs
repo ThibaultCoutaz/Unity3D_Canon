@@ -9,6 +9,7 @@ public class GamePlay : MonoBehaviour
     public GameObject Spawn;
     public GameObject End;
     public GameObject MachinGun;
+    public GameObject LanceGrenade;
     bool spawndone = true;
     public List<GameObject> TargetActive = new List<GameObject>();
     public List<GameObject> TargetInActive = new List<GameObject>();
@@ -31,9 +32,18 @@ public class GamePlay : MonoBehaviour
     float Money = 100;
     public GameObject TextLife;
     public float Life = 10;
+    /*
+    *0 = gatling
+    *1 = lancegrenade
+    */
+    int weapon = 0; 
 
     public List<GameObject> TowerGatlActive = new List<GameObject>();
     public List<GameObject> TowerGatlInActive = new List<GameObject>();
+
+
+    public List<GameObject> TowerGreActive = new List<GameObject>();
+    public List<GameObject> TowerGreInActive = new List<GameObject>();
 
 
     // Use this for initialization
@@ -57,6 +67,7 @@ public class GamePlay : MonoBehaviour
         TestWay(spawn,end);
 
         TowerGatlInActive.Add(MachinGun);
+        TowerGreInActive.Add(LanceGrenade);
     }
 
     // Update is called once per frame
@@ -68,40 +79,90 @@ public class GamePlay : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.F))
             StartCoroutine("FREEZE");
 
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            if (weapon == 0)
+            {
+                weapon = 1;
+            }
+            else if (weapon == 1)
+            {
+                weapon = 0;
+            }
+        }
+
+
         TargetProgress(TargetWork);
 
     }
 
     void OnMouseDown()
     {
-        Ray ray = c.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        // Casts the ray and get the first game object hit
-        Physics.Raycast(ray, out hit);
-
-        float tempx = 16f + hit.point.x;
-        float tempxc = tempx / 1.6f;
-
-        float tempz = 16f + hit.point.z;
-        float tempzc = tempz / 1.6f;
-        if(tabmap[(int)tempxc, (int)tempzc] != 1 && tabmap[(int)tempxc, (int)tempzc] != 3 && Money >99)
+        if (weapon ==0)
         {
-            tabmap[(int)tempxc, (int)tempzc] = 1;
+            Ray ray = c.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            // Casts the ray and get the first game object hit
+            Physics.Raycast(ray, out hit);
 
-            if (TowerGatlInActive.Count == 0)
+            float tempx = 16f + hit.point.x;
+            float tempxc = tempx / 1.6f;
+
+            float tempz = 16f + hit.point.z;
+            float tempzc = tempz / 1.6f;
+            if (tabmap[(int)tempxc, (int)tempzc] != 1 && tabmap[(int)tempxc, (int)tempzc] != 3)
             {
-                MachinGun = Instantiate(MachinGun, new Vector3((int)tempxc * stepx - size.bounds.size.x / 2 + (stepx / 2), 0, (int)tempzc * stepz - size.bounds.size.z / 2 + (stepz / 2)), transform.rotation) as GameObject;
-                TowerGatlActive.Add(target);
+                tabmap[(int)tempxc, (int)tempzc] = 1;
+
+                if (TowerGatlInActive.Count == 0)
+                {
+                    MachinGun = Instantiate(MachinGun, new Vector3((int)tempxc * stepx - size.bounds.size.x / 2 + (stepx / 2), 0, (int)tempzc * stepz - size.bounds.size.z / 2 + (stepz / 2)), transform.rotation) as GameObject;
+                    TowerGatlActive.Add(MachinGun);
+                }
+                else
+                {
+                    TowerGatlInActive[0].transform.position = new Vector3((int)tempxc * stepx - size.bounds.size.x / 2 + (stepx / 2), 0, (int)tempzc * stepz - size.bounds.size.z / 2 + (stepz / 2));
+                    TowerGatlInActive[0].SetActive(true);
+                    TowerGatlActive.Add(TowerGatlInActive[0]);
+                    TowerGatlInActive.RemoveAt(0);
+                }
+                Money -= 10;
             }
-            else
+
+
+        }else if(weapon == 1)
+        {
+            Ray ray = c.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            // Casts the ray and get the first game object hit
+            Physics.Raycast(ray, out hit);
+
+            float tempx = 16f + hit.point.x;
+            float tempxc = tempx / 1.6f;
+
+            float tempz = 16f + hit.point.z;
+            float tempzc = tempz / 1.6f;
+            if (tabmap[(int)tempxc, (int)tempzc] != 1 && tabmap[(int)tempxc, (int)tempzc] != 3)
             {
-                TowerGatlInActive[0].transform.position = new Vector3((int)tempxc * stepx - size.bounds.size.x / 2 + (stepx / 2), 0, (int)tempzc * stepz - size.bounds.size.z / 2 + (stepz / 2));
-                TowerGatlInActive[0].SetActive(true);
-                TowerGatlActive.Add(TowerGatlInActive[0]);
-                TowerGatlInActive.RemoveAt(0);
+                tabmap[(int)tempxc, (int)tempzc] = 1;
+
+                if (TowerGreInActive.Count == 0)
+                {
+                    LanceGrenade = Instantiate(LanceGrenade, new Vector3((int)tempxc * stepx - size.bounds.size.x / 2 + (stepx / 2), 0, (int)tempzc * stepz - size.bounds.size.z / 2 + (stepz / 2)), transform.rotation) as GameObject;
+                    TowerGatlActive.Add(LanceGrenade);
+                }
+                else
+                {
+                    TowerGreInActive[0].transform.position = new Vector3((int)tempxc * stepx - size.bounds.size.x / 2 + (stepx / 2), 0, (int)tempzc * stepz - size.bounds.size.z / 2 + (stepz / 2));
+                    TowerGreInActive[0].SetActive(true);
+                    TowerGreActive.Add(TowerGreInActive[0]);
+                    TowerGreInActive.RemoveAt(0);
+                }
+                Money -= 50;
             }
-            Money -= 100;
         }
+
+
     }
 
 
@@ -111,6 +172,8 @@ public class GamePlay : MonoBehaviour
         {
             target = Instantiate(target, Spawn.transform.position, transform.rotation) as GameObject;
             target.GetComponent<BehaviourTarget>().Plane = this.gameObject;
+            shield(target);
+            print("New : " + target.GetComponent<BehaviourTarget>().shield);
             TargetActive.Add(target);
             spawndone = false;
             yield return new WaitForSeconds(2f);
@@ -121,11 +184,35 @@ public class GamePlay : MonoBehaviour
             TargetInActive[0].transform.position = Spawn.transform.position;
             TargetInActive[0].GetComponent<BehaviourTarget>().Life = 4;
             TargetInActive[0].SetActive(true);
+            shield(TargetInActive[0]);
+            print("Inactif to actif : "+TargetActive[0].GetComponent<BehaviourTarget>().shield);
             TargetActive.Add(TargetInActive[0]);
             TargetInActive.RemoveAt(0);
             spawndone = false;
             yield return new WaitForSeconds(2f);
             spawndone = true;
+        }
+    }
+
+    IEnumerable ChangeWeapon()
+    {
+        if (weapon == 0)
+        {
+            weapon = 1;
+        }
+        else if (weapon == 1)
+        {
+            weapon = 0;
+        }
+        yield return new WaitForSeconds(0.5f);
+    }
+
+    //*********To define if shield or not*********//
+    void shield(GameObject target)
+    {
+        if (Random.Range(0, 100) < 100)
+        {
+            target.GetComponent<BehaviourTarget>().shield = true;
         }
     }
 
