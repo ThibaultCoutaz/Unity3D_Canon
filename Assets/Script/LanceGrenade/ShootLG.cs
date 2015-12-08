@@ -37,7 +37,7 @@ public class ShootLG : MonoBehaviour {
             rb.velocity = transform.TransformVector(new Vector3(0, 1, 0)) * Speed;
             BulletActive.Add(bullet);
             Shootdone = false;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(2f);
             Shootdone = true;
         }
         else
@@ -50,7 +50,7 @@ public class ShootLG : MonoBehaviour {
             BulletActive.Add(BulletInActive[0]);
             BulletInActive.Remove(BulletInActive[0]);
             Shootdone = false;
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(2f);
             Shootdone = true;
         }
     }

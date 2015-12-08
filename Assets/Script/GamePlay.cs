@@ -24,8 +24,7 @@ public class GamePlay : MonoBehaviour
     */
     public Renderer size;
     public Camera c;
-    float stepx;
-    float stepz;
+    float stepx, stepz,halfTaillex,halfTaillez;
     Vector3 directionT;
     bool TargetWork = true;
     public GameObject TextMoney;
@@ -47,7 +46,7 @@ public class GamePlay : MonoBehaviour
 
 
     // Use this for initialization
-    void Start()
+    void Awake()
     {
         tabmap = new int[TailleMap, TailleMap];
         for (int i = 0; i < TailleMap; i++)
@@ -57,6 +56,8 @@ public class GamePlay : MonoBehaviour
 
         stepx = size.bounds.size.x / TailleMap;
         stepz = size.bounds.size.z / TailleMap;
+        halfTaillex = size.bounds.size.x / 2 ;
+        halfTaillez = size.bounds.size.z / 2;
 
         Vector3 spawn = Spawn.transform.position;
         Vector3 end = End.transform.position;
@@ -105,11 +106,11 @@ public class GamePlay : MonoBehaviour
             // Casts the ray and get the first game object hit
             Physics.Raycast(ray, out hit);
 
-            float tempx = 16f + hit.point.x;
-            float tempxc = tempx / 1.6f;
+            float tempx = halfTaillex + hit.point.x;
+            float tempxc = tempx / stepx;
 
-            float tempz = 16f + hit.point.z;
-            float tempzc = tempz / 1.6f;
+            float tempz = halfTaillez + hit.point.z;
+            float tempzc = tempz / stepz;
             if (tabmap[(int)tempxc, (int)tempzc] != 1 && tabmap[(int)tempxc, (int)tempzc] != 3)
             {
                 tabmap[(int)tempxc, (int)tempzc] = 1;
@@ -137,11 +138,11 @@ public class GamePlay : MonoBehaviour
             // Casts the ray and get the first game object hit
             Physics.Raycast(ray, out hit);
 
-            float tempx = 16f + hit.point.x;
-            float tempxc = tempx / 1.6f;
+            float tempx = halfTaillex + hit.point.x;
+            float tempxc = tempx / stepx;
 
-            float tempz = 16f + hit.point.z;
-            float tempzc = tempz / 1.6f;
+            float tempz = halfTaillez + hit.point.z;
+            float tempzc = tempz / stepz;
             if (tabmap[(int)tempxc, (int)tempzc] != 1 && tabmap[(int)tempxc, (int)tempzc] != 3)
             {
                 tabmap[(int)tempxc, (int)tempzc] = 1;
@@ -170,11 +171,9 @@ public class GamePlay : MonoBehaviour
     {
         if (TargetInActive.Count == 0)
         {
-            target = Instantiate(target, Spawn.transform.position, transform.rotation) as GameObject;
-            target.GetComponent<BehaviourTarget>().Plane = this.gameObject;
-            shield(target);
-            print("New : " + target.GetComponent<BehaviourTarget>().shield);
-            TargetActive.Add(target);
+            GameObject targetPC = Instantiate(target, Spawn.transform.position, transform.rotation) as GameObject;
+            targetPC.GetComponent<BehaviourTarget>().Plane = this.gameObject;
+            TargetActive.Add(targetPC);
             spawndone = false;
             yield return new WaitForSeconds(2f);
             spawndone = true;
@@ -184,35 +183,11 @@ public class GamePlay : MonoBehaviour
             TargetInActive[0].transform.position = Spawn.transform.position;
             TargetInActive[0].GetComponent<BehaviourTarget>().Life = 4;
             TargetInActive[0].SetActive(true);
-            shield(TargetInActive[0]);
-            print("Inactif to actif : "+TargetActive[0].GetComponent<BehaviourTarget>().shield);
             TargetActive.Add(TargetInActive[0]);
             TargetInActive.RemoveAt(0);
             spawndone = false;
             yield return new WaitForSeconds(2f);
             spawndone = true;
-        }
-    }
-
-    IEnumerable ChangeWeapon()
-    {
-        if (weapon == 0)
-        {
-            weapon = 1;
-        }
-        else if (weapon == 1)
-        {
-            weapon = 0;
-        }
-        yield return new WaitForSeconds(0.5f);
-    }
-
-    //*********To define if shield or not*********//
-    void shield(GameObject target)
-    {
-        if (Random.Range(0, 100) < 100)
-        {
-            target.GetComponent<BehaviourTarget>().shield = true;
         }
     }
 
@@ -285,6 +260,9 @@ public class GamePlay : MonoBehaviour
     }
 
     //***To define the way of the taregt like this we can't put tower there****//
+    /////////PLEIN DE MODIF A FAIRE
+    // 16 = size /2
+    //1.6 = size / taillemap 
     void TestWay(Vector3 spawn,Vector3 end)
     {
         Vector3 test = spawn;
@@ -295,21 +273,21 @@ public class GamePlay : MonoBehaviour
             {
                 test += directionT * 0.1f;
 
-                float tempx = 16f + test.x + target.GetComponent<SphereCollider>().radius;
-                float tempxc = tempx / 1.6f;
+                float tempx = halfTaillex + test.x + target.GetComponent<SphereCollider>().radius;
+                float tempxc = tempx / stepx;
 
-                float tempz = 16f + test.z + target.GetComponent<SphereCollider>().radius;
-                float tempzc = tempz / 1.6f;
+                float tempz = halfTaillex + test.z + target.GetComponent<SphereCollider>().radius;
+                float tempzc = tempz / stepz;
                 if (tabmap[(int)tempxc, (int)tempzc] != 3)
                 {
                     tabmap[(int)tempxc, (int)tempzc] = 3;
                 }
 
-                tempx = 16f + test.x - target.GetComponent<SphereCollider>().radius;
-                tempxc = tempx / 1.6f;
+                tempx = halfTaillex + test.x - target.GetComponent<SphereCollider>().radius;
+                tempxc = tempx / stepx;
 
-                tempz = 16f + test.z - target.GetComponent<SphereCollider>().radius;
-                tempzc = tempz / 1.6f;
+                tempz = halfTaillez + test.z - target.GetComponent<SphereCollider>().radius;
+                tempzc = tempz / stepz;
                 if (tabmap[(int)tempxc, (int)tempzc] != 3)
                 {
                     tabmap[(int)tempxc, (int)tempzc] = 3;

@@ -26,8 +26,6 @@ public class BulletLG : MonoBehaviour
 
         if (nbBounce == 0)
         {
-            p.Play();
-            p2.Play();
             ExitBullet.GetComponent<ShootLG>().DisableBullet(this.gameObject);
             nbBounce = 3;
             ExplosionDmg();
@@ -39,7 +37,7 @@ public class BulletLG : MonoBehaviour
     {
         if (col.gameObject.name == "Plane")
         {
-            print(nbBounce--);
+            nbBounce--;
         }
 
         List<GameObject> cible = Plane.GetComponent<GamePlay>().TargetActive;
