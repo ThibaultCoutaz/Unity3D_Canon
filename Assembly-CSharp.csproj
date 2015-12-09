@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Script\BehaviourTarget.cs" />
+     <Compile Include="Assets\Script\ButtonControler.cs" />
+     <Compile Include="Assets\Script\Datas.cs" />
      <Compile Include="Assets\Script\EndScript.cs" />
      <Compile Include="Assets\Script\GamePlay.cs" />
      <Compile Include="Assets\Script\Gatling\Bullet.cs" />
@@ -57,18 +59,14 @@
      <Compile Include="Assets\Script\RotationScript\RotationFire.cs" />
      <Compile Include="Assets\Script\RotationScript\RotationHautBas.cs" />
      <Compile Include="Assets\Script\RotationScript\rotationGaucheDroite.cs" />
+     <Compile Include="Assets\Script\Sound\AudioController.cs" />
+     <Compile Include="Assets\Script\Sound\AudioData.cs" />
      <Compile Include="Assets\Script\SpecialEffectsHelper.cs" />
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Advertisements/UnityEngine.Advertisements.dll</HintPath>
- </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.Networking">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
- </Reference>
- <Reference Include="UnityEngine.Analytics">
- <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/UnityAnalytics/UnityEngine.Analytics.dll</HintPath>
  </Reference>
  <Reference Include="Mono.Cecil">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/Mono.Cecil.dll</HintPath>
