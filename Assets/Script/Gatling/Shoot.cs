@@ -12,6 +12,7 @@ public class Shoot : MonoBehaviour {
     public List<GameObject> BulletInActive = new List<GameObject>();
     public GameObject MachinGun;
     public GameObject Plane;
+    public AudioClip shootFX;
 
     // Update is called once per frame
     void Update () {
@@ -26,7 +27,9 @@ public class Shoot : MonoBehaviour {
 
     IEnumerator Shooting()
     {
-        
+        //Control Sound
+        Camera.main.GetComponent<AudioSource>().PlayOneShot(shootFX);
+
         if (BulletInActive.Count == 0)
         {
             bullet = Instantiate(bullet, transform.position, transform.rotation) as GameObject;

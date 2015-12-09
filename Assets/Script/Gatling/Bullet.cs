@@ -6,6 +6,11 @@ public class Bullet : MonoBehaviour {
 
     public GameObject ExitBullet;
     public GameObject Plane;
+    public AudioClip explosion;
+
+    void Start()
+    {
+    }
 	// Update is called once per frame
 	void Update () {
         if(transform.position.x<16 && transform.position.z<16 && transform.position.x>-16 && transform.position.z > -16) //To check if the bullet is in of the Map
@@ -35,6 +40,9 @@ public class Bullet : MonoBehaviour {
                     //print("La vie de la cible "+i+ " aprés est de "+ cible[i].GetComponent<BehaviourTarget>().Life);
                     if (cible[i].GetComponent<BehaviourTarget>().Life == 0)
                     {
+                        //Control Sound
+                        Camera.main.GetComponent<AudioSource>().PlayOneShot(explosion);
+                        //Control Particule
                         ParticleSystem p = (Instantiate(cible[i].GetComponent<BehaviourTarget>().explosion.gameObject, cible[i].transform.position, Quaternion.identity) as GameObject).GetComponent<ParticleSystem>();
                         p.Play();
                         Plane.GetComponent<GamePlay>().DisableTarget(cible[i],true);

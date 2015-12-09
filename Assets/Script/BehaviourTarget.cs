@@ -15,11 +15,10 @@ public class BehaviourTarget : MonoBehaviour {
     {
         shield = true;
         shieldMesh.SetActive(shield);
-        if (Random.Range(0, 100) < 0)
+        if (Random.Range(0, 100) < 50)
         {
             shield = false;
             shieldMesh.SetActive(shield);
-            print("squalala");
             target.GetComponent<HingeJoint>().useMotor = false;
         }
     }

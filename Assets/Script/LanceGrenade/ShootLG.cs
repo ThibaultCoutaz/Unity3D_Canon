@@ -12,6 +12,7 @@ public class ShootLG : MonoBehaviour {
     public List<GameObject> BulletInActive = new List<GameObject>();
     public GameObject LanceGrenade;
     public GameObject Plane;
+    public AudioClip shootFX;
 
     // Update is called once per frame
     void Update()
@@ -27,6 +28,8 @@ public class ShootLG : MonoBehaviour {
 
     IEnumerator Shooting()
     {
+        //Control Sound
+        Camera.main.GetComponent<AudioSource>().PlayOneShot(shootFX);
 
         if (BulletInActive.Count == 0)
         {

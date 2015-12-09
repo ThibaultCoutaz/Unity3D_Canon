@@ -11,6 +11,7 @@ public class BulletLG : MonoBehaviour
     public ParticleSystem p2;
     int nbBounce = 3;
     public float Rexplosion = 2f;
+    public AudioClip explosion;
 
     void start()
     {
@@ -48,14 +49,25 @@ public class BulletLG : MonoBehaviour
                 if (col.gameObject.name == cible[i].name)
                 {
                     ExitBullet.GetComponent<ShootLG>().DisableBullet(this.gameObject);
-                    cible[i].GetComponent<BehaviourTarget>().Life--;
-                    if (cible[i].GetComponent<BehaviourTarget>().Life == 0)
+                    if (cible[i].GetComponent<BehaviourTarget>().shield == true)
                     {
-                        ParticleSystem p = (Instantiate(cible[i].GetComponent<BehaviourTarget>().explosion.gameObject, cible[i].transform.position, Quaternion.identity) as GameObject).GetComponent<ParticleSystem>();
-                        p.Play();
-                        Plane.GetComponent<GamePlay>().DisableTarget(cible[i], true);
-                        Destroy(p, 0.5f);
+                        cible[i].GetComponent<BehaviourTarget>().shield = false;
                     }
+                    else
+                    {
+                        cible[i].GetComponent<BehaviourTarget>().Life--;
+                        if (cible[i].GetComponent<BehaviourTarget>().Life == 0)
+                        {
+                            //Control Sound
+                            Camera.main.GetComponent<AudioSource>().PlayOneShot(explosion);
+                            //Control Particule
+                            ParticleSystem p = (Instantiate(cible[i].GetComponent<BehaviourTarget>().explosion.gameObject, cible[i].transform.position, Quaternion.identity) as GameObject).GetComponent<ParticleSystem>();
+                            p.Play();
+                            Plane.GetComponent<GamePlay>().DisableTarget(cible[i], true);
+                            Destroy(p, 0.5f);
+                        }
+                    }
+                    
                 }
             }
     }
